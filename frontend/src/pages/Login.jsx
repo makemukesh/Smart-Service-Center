@@ -115,8 +115,8 @@ const Login = () => {
                         <div className="grid grid-cols-3 gap-2">
                             {[
                                 { label: 'Customer', email: 'customer1@test.com', pass: 'password123' },
-                                { label: 'Admin', email: 'admin1@vehicleservice.com', pass: 'admin123' },
-                                { label: 'SuperAdmin', email: 'superadmin@vehicleservice.com', pass: 'admin123' },
+                                { label: 'Admin', email: 'admin1@carservice.com', pass: 'admin123' },
+                                { label: 'SuperAdmin', email: 'superadmin@carservice.com', pass: 'admin123' },
                             ].map((demo) => (
                                 <button key={demo.label}
                                     onClick={() => setForm({ email: demo.email, password: demo.pass })}

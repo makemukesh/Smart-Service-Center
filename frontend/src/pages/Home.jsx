@@ -9,12 +9,12 @@ const Home = () => {
     const { user } = useAuth();
 
     const services = [
-        { icon: Wrench, title: 'General Service', desc: 'Complete multi-point inspection and maintenance', price: '$99', color: 'from-blue-500 to-cyan-500' },
-        { icon: Car, title: 'Engine Repair', desc: 'Expert diagnostics and engine repair services', price: '$299', color: 'from-purple-500 to-pink-500' },
-        { icon: Shield, title: 'Brake Repair', desc: 'Safety-critical brake system inspection and repair', price: '$149', color: 'from-amber-500 to-orange-500' },
-        { icon: Sparkles, title: 'Detailing', desc: 'Premium wash, polish, and interior detailing', price: '$39', color: 'from-emerald-500 to-teal-500' },
-        { icon: Zap, title: 'AC Service', desc: 'Complete AC system check, gas refill and repair', price: '$69', color: 'from-rose-500 to-red-500' },
-        { icon: CheckCircle, title: 'Full Inspection', desc: '200-point comprehensive vehicle health check', price: '$79', color: 'from-indigo-500 to-violet-500' },
+        { icon: Wrench, title: 'General Service', desc: 'Complete multi-point inspection and maintenance', price: '₹2,499', color: 'from-blue-500 to-cyan-500' },
+        { icon: Car, title: 'Engine Repair', desc: 'Expert diagnostics and engine repair services', price: '₹8,999', color: 'from-purple-500 to-pink-500' },
+        { icon: Shield, title: 'Brake Repair', desc: 'Safety-critical brake system inspection and repair', price: '₹3,499', color: 'from-amber-500 to-orange-500' },
+        { icon: Sparkles, title: 'Detailing', desc: 'Premium wash, polish, and interior detailing', price: '₹999', color: 'from-emerald-500 to-teal-500' },
+        { icon: Zap, title: 'AC Service', desc: 'Complete AC system check, gas refill and repair', price: '₹1,999', color: 'from-rose-500 to-red-500' },
+        { icon: CheckCircle, title: 'Full Inspection', desc: '200-point comprehensive vehicle health check', price: '₹1,499', color: 'from-indigo-500 to-violet-500' },
     ];
 
     const stats = [
@@ -40,16 +40,16 @@ const Home = () => {
                         <div className="animate-fade-in-up">
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary-light text-sm mb-6">
                                 <Sparkles className="w-4 h-4" />
-                                <span>#1 Vehicle Service Platform</span>
+                                <span>#1 Car Service Platform</span>
                             </div>
                             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
-                                <span className="text-white">Smart Vehicle</span>
+                                <span className="text-white">Smart Car</span>
                                 <br />
                                 <span className="gradient-text">Service Booking</span>
                             </h1>
                             <p className="text-lg text-slate-400 max-w-lg mb-8 leading-relaxed">
-                                Book your vehicle service in minutes. Track progress in real-time.
-                                Get your vehicle serviced by certified professionals at the best service centers near you.
+                                Book your car service in minutes. Track progress in real-time.
+                                Get your car serviced by certified professionals at the best service centers near you.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4">
                                 <Link to={user ? '/dashboard/book' : '/register'}
@@ -78,7 +78,7 @@ const Home = () => {
                                   flex items-center justify-center animate-pulse-glow">
                                             <Car className="w-16 h-16 text-white" />
                                         </div>
-                                        <h3 className="text-2xl font-bold text-white mb-2">Your Vehicle</h3>
+                                        <h3 className="text-2xl font-bold text-white mb-2">Your Car</h3>
                                         <p className="text-slate-400">Deserves the Best Care</p>
                                         <div className="mt-6 flex justify-center gap-4">
                                             {['🔧', '🛡️', '⚡', '✨'].map((emoji, i) => (
@@ -138,7 +138,7 @@ const Home = () => {
                     <div className="text-center mb-12 animate-fade-in-up" style={{ opacity: 0 }}>
                         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Our Services</h2>
                         <p className="text-slate-400 max-w-2xl mx-auto">
-                            Professional vehicle maintenance services with transparent pricing and certified mechanics
+                            Professional car maintenance services with transparent pricing and certified mechanics
                         </p>
                     </div>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -167,13 +167,13 @@ const Home = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">How It Works</h2>
-                        <p className="text-slate-400">Book your service in 4 simple steps</p>
+                        <p className="text-slate-400">Book your car service in 4 simple steps</p>
                     </div>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         {[
-                            { step: '01', title: 'Register', desc: 'Create your account and add your vehicles', icon: Users },
+                            { step: '01', title: 'Register', desc: 'Create your account and add your cars', icon: Users },
                             { step: '02', title: 'Book', desc: 'Choose service center, type, and schedule', icon: CalendarCheck },
-                            { step: '03', title: 'Track', desc: 'Monitor your service progress in real-time', icon: Clock },
+                            { step: '03', title: 'Track', desc: 'Monitor your car service progress in real-time', icon: Clock },
                             { step: '04', title: 'Pay & Review', desc: 'Secure payment and share your feedback', icon: CreditCard },
                         ].map((item, i) => (
                             <div key={i} className="glass-card p-6 rounded-2xl text-center animate-fade-in-up"
@@ -198,7 +198,7 @@ const Home = () => {
                         <div className="relative z-10">
                             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Ready to Get Started?</h2>
                             <p className="text-slate-400 mb-8 max-w-lg mx-auto">
-                                Join thousands of happy vehicle owners who trust SmartService for their vehicle maintenance needs.
+                                Join thousands of happy car owners who trust SmartService for their car maintenance needs.
                             </p>
                             <Link to="/register"
                                 className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary to-secondary

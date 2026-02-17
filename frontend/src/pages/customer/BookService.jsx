@@ -5,20 +5,20 @@ import { Car, Building2, Calendar, Clock, Wrench, FileText, ArrowRight, AlertCir
 import toast from 'react-hot-toast';
 
 const SERVICE_TYPES = [
-    { value: 'general_service', label: 'General Service', price: 99 },
-    { value: 'oil_change', label: 'Oil Change', price: 49 },
-    { value: 'brake_repair', label: 'Brake Repair', price: 149 },
-    { value: 'engine_repair', label: 'Engine Repair', price: 299 },
-    { value: 'tire_replacement', label: 'Tire Replacement', price: 79 },
-    { value: 'battery_replacement', label: 'Battery Replacement', price: 89 },
-    { value: 'ac_service', label: 'AC Service', price: 69 },
-    { value: 'body_repair', label: 'Body Repair', price: 199 },
-    { value: 'painting', label: 'Painting', price: 399 },
-    { value: 'wheel_alignment', label: 'Wheel Alignment', price: 59 },
-    { value: 'transmission_repair', label: 'Transmission Repair', price: 349 },
-    { value: 'electrical_repair', label: 'Electrical Repair', price: 129 },
-    { value: 'full_inspection', label: 'Full Inspection', price: 79 },
-    { value: 'wash_and_detailing', label: 'Wash & Detailing', price: 39 },
+    { value: 'general_service', label: 'General Service', price: 2499 },
+    { value: 'oil_change', label: 'Oil Change', price: 1499 },
+    { value: 'brake_repair', label: 'Brake Repair', price: 3499 },
+    { value: 'engine_repair', label: 'Engine Repair', price: 8999 },
+    { value: 'tire_replacement', label: 'Tire Replacement', price: 1999 },
+    { value: 'battery_replacement', label: 'Battery Replacement', price: 2499 },
+    { value: 'ac_service', label: 'AC Service', price: 1999 },
+    { value: 'body_repair', label: 'Body Repair', price: 4999 },
+    { value: 'painting', label: 'Painting', price: 9999 },
+    { value: 'wheel_alignment', label: 'Wheel Alignment', price: 999 },
+    { value: 'transmission_repair', label: 'Transmission Repair', price: 7999 },
+    { value: 'electrical_repair', label: 'Electrical Repair', price: 2999 },
+    { value: 'full_inspection', label: 'Full Inspection', price: 1499 },
+    { value: 'wash_and_detailing', label: 'Wash & Detailing', price: 999 },
 ];
 
 const BookService = () => {
@@ -110,7 +110,7 @@ const BookService = () => {
                             {vehicles.length === 0 ? (
                                 <div className="text-center py-8">
                                     <AlertCircle className="w-12 h-12 mx-auto text-amber-400 mb-3" />
-                                    <p className="text-white font-medium">No vehicles found</p>
+                                    <p className="text-white font-medium">No cars found</p>
                                     <p className="text-sm text-slate-400 mt-1">Please add a vehicle first</p>
                                     <button onClick={() => navigate('/dashboard/vehicles')}
                                         className="mt-4 px-4 py-2 bg-primary/20 text-primary-light rounded-lg hover:bg-primary/30 transition-colors">
@@ -129,7 +129,7 @@ const BookService = () => {
                                                 <Car className={`w-8 h-8 ${form.vehicle === v._id ? 'text-primary-light' : 'text-slate-400'}`} />
                                                 <div>
                                                     <p className="font-medium text-white">{v.brand} {v.model}</p>
-                                                    <p className="text-xs text-slate-400">{v.registrationNumber} · {v.year} · {v.type}</p>
+                                                    <p className="text-xs text-slate-400">{v.registrationNumber} · {v.year}</p>
                                                 </div>
                                             </div>
                                         </button>
@@ -186,7 +186,7 @@ const BookService = () => {
                                                         : 'border-white/10 bg-white/5 text-slate-300 hover:border-white/20'}`}>
                                                 <div className="flex justify-between">
                                                     <span>{s.label}</span>
-                                                    <span className="font-semibold text-primary-light">${s.price}</span>
+                                                    <span className="font-semibold text-primary-light">₹{s.price.toLocaleString('en-IN')}</span>
                                                 </div>
                                             </button>
                                         ))}
@@ -230,7 +230,7 @@ const BookService = () => {
                                 <SummaryRow label="Time" value={form.scheduledTime} />
                                 {form.notes && <SummaryRow label="Notes" value={form.notes} />}
                                 <div className="border-t border-white/10 pt-3">
-                                    <SummaryRow label="Estimated Cost" value={`$${selectedService?.price}`} highlight />
+                                    <SummaryRow label="Estimated Cost" value={`₹${selectedService?.price?.toLocaleString('en-IN')}`} highlight />
                                 </div>
                             </div>
                         </div>

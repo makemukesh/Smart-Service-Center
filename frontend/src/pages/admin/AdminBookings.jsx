@@ -122,7 +122,7 @@ const AdminBookings = () => {
                                             <p className="text-sm text-white">{new Date(b.scheduledDate).toLocaleDateString()}</p>
                                             <p className="text-[11px] text-slate-500">{b.scheduledTime}</p>
                                         </td>
-                                        <td className="text-sm font-semibold text-emerald-400">${b.actualCost || b.estimatedCost}</td>
+                                        <td className="text-sm font-semibold text-emerald-400">₹{(b.actualCost || b.estimatedCost)?.toLocaleString('en-IN')}</td>
                                         <td>
                                             <span className={`text-xs px-2 py-0.5 rounded-full font-medium
                         ${b.isPaid ? 'bg-emerald-500/15 text-emerald-400' : 'bg-slate-500/15 text-slate-400'}`}>

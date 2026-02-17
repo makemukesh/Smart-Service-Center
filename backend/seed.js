@@ -28,7 +28,7 @@ const seedDB = async () => {
         // Create Super Admin
         const superAdmin = await User.create({
             name: 'Super Admin',
-            email: 'superadmin@vehicleservice.com',
+            email: 'superadmin@carservice.com',
             password: 'admin123',
             phone: '9999999999',
             role: 'superadmin'
@@ -37,7 +37,7 @@ const seedDB = async () => {
         // Create Admin Users
         const admin1 = await User.create({
             name: 'Rajesh Kumar',
-            email: 'admin1@vehicleservice.com',
+            email: 'admin1@carservice.com',
             password: 'admin123',
             phone: '9876543210',
             role: 'admin'
@@ -45,7 +45,7 @@ const seedDB = async () => {
 
         const admin2 = await User.create({
             name: 'Priya Sharma',
-            email: 'admin2@vehicleservice.com',
+            email: 'admin2@carservice.com',
             password: 'admin123',
             phone: '9876543211',
             role: 'admin'
@@ -78,43 +78,30 @@ const seedDB = async () => {
 
         // Create Service Centers
         const center1 = await ServiceCenter.create({
-            name: 'AutoCare Premium Services',
+            name: 'SmartServ Basic Car Care',
             address: { street: '123 MG Road', city: 'Mumbai', state: 'Maharashtra', zipCode: '400001' },
             phone: '022-12345678',
-            email: 'autocare@service.com',
-            servicesOffered: ['general_service', 'oil_change', 'brake_repair', 'engine_repair', 'ac_service', 'full_inspection', 'wash_and_detailing'],
+            email: 'basic@smartserv.com',
+            servicesOffered: ['general_service', 'oil_change', 'brake_repair', 'tire_replacement', 'battery_replacement', 'ac_service', 'wheel_alignment', 'full_inspection', 'wash_and_detailing'],
             operatingHours: { open: '08:00', close: '20:00' },
             admin: admin1._id,
-            rating: 4.5,
-            totalReviews: 128,
-            description: 'Premium multi-brand auto service center with state-of-the-art equipment and certified technicians.',
+            rating: 4.3,
+            totalReviews: 156,
+            description: 'Affordable and reliable service center for all budget and mid-range cars. Specializing in Maruti, Hyundai, Tata, Honda, and similar brands with transparent pricing.',
             isActive: true
         });
 
         const center2 = await ServiceCenter.create({
-            name: 'SpeedFix Auto Hub',
-            address: { street: '456 Brigade Road', city: 'Bangalore', state: 'Karnataka', zipCode: '560001' },
-            phone: '080-87654321',
-            email: 'speedfix@service.com',
-            servicesOffered: ['general_service', 'tire_replacement', 'battery_replacement', 'wheel_alignment', 'painting', 'body_repair', 'electrical_repair'],
+            name: 'SmartServ Premium Auto Lounge',
+            address: { street: '456 Bandra West', city: 'Mumbai', state: 'Maharashtra', zipCode: '400050' },
+            phone: '022-87654321',
+            email: 'premium@smartserv.com',
+            servicesOffered: ['general_service', 'oil_change', 'brake_repair', 'engine_repair', 'tire_replacement', 'battery_replacement', 'ac_service', 'body_repair', 'painting', 'wheel_alignment', 'transmission_repair', 'electrical_repair', 'full_inspection', 'wash_and_detailing'],
             operatingHours: { open: '09:00', close: '19:00' },
             admin: admin2._id,
-            rating: 4.2,
-            totalReviews: 95,
-            description: 'Quick and reliable auto repair services with transparent pricing and swift turnaround times.',
-            isActive: true
-        });
-
-        const center3 = await ServiceCenter.create({
-            name: 'Elite Motors Workshop',
-            address: { street: '789 Connaught Place', city: 'New Delhi', state: 'Delhi', zipCode: '110001' },
-            phone: '011-55667788',
-            email: 'elite@service.com',
-            servicesOffered: ['general_service', 'oil_change', 'engine_repair', 'transmission_repair', 'ac_service', 'full_inspection', 'electrical_repair'],
-            operatingHours: { open: '08:30', close: '18:30' },
-            rating: 4.7,
+            rating: 4.8,
             totalReviews: 210,
-            description: 'Luxury car specialists offering premium service experience with genuine parts warranty.',
+            description: 'Luxury and premium car specialists for BMW, Mercedes, Audi, Jaguar, and other high-end brands. Certified technicians, genuine OEM parts, and a premium lounge experience.',
             isActive: true
         });
 
@@ -122,7 +109,7 @@ const seedDB = async () => {
         await User.findByIdAndUpdate(admin1._id, { serviceCenterId: center1._id });
         await User.findByIdAndUpdate(admin2._id, { serviceCenterId: center2._id });
 
-        // Create Vehicles
+        // Create Vehicles (Cars only)
         const vehicle1 = await Vehicle.create({
             owner: customer1._id,
             type: 'car',
@@ -137,14 +124,14 @@ const seedDB = async () => {
 
         const vehicle2 = await Vehicle.create({
             owner: customer1._id,
-            type: 'bike',
-            brand: 'Royal Enfield',
-            model: 'Classic 350',
+            type: 'car',
+            brand: 'BMW',
+            model: '3 Series',
             year: 2023,
             registrationNumber: 'MH01CD5678',
             color: 'Black',
             fuelType: 'petrol',
-            mileage: 8000
+            mileage: 12000
         });
 
         const vehicle3 = await Vehicle.create({
@@ -180,8 +167,8 @@ const seedDB = async () => {
             scheduledDate: new Date('2026-02-15'),
             scheduledTime: '10:00',
             status: 'completed',
-            estimatedCost: 99,
-            actualCost: 110,
+            estimatedCost: 2499,
+            actualCost: 2799,
             isPaid: true,
             notes: 'Regular maintenance service'
         });
@@ -194,30 +181,30 @@ const seedDB = async () => {
             scheduledDate: new Date('2026-02-16'),
             scheduledTime: '11:00',
             status: 'in_service',
-            estimatedCost: 79,
-            actualCost: 85
+            estimatedCost: 1999,
+            actualCost: 2199
         });
 
         const booking3 = await Booking.create({
             customer: customer3._id,
             vehicle: vehicle4._id,
-            serviceCenter: center3._id,
+            serviceCenter: center1._id,
             serviceType: 'oil_change',
             scheduledDate: new Date('2026-02-17'),
             scheduledTime: '09:30',
             status: 'pending',
-            estimatedCost: 49
+            estimatedCost: 1499
         });
 
         const booking4 = await Booking.create({
             customer: customer1._id,
             vehicle: vehicle2._id,
-            serviceCenter: center1._id,
+            serviceCenter: center2._id,
             serviceType: 'brake_repair',
             scheduledDate: new Date('2026-02-18'),
             scheduledTime: '14:00',
             status: 'confirmed',
-            estimatedCost: 149
+            estimatedCost: 3499
         });
 
         const booking5 = await Booking.create({
@@ -228,8 +215,8 @@ const seedDB = async () => {
             scheduledDate: new Date('2026-02-10'),
             scheduledTime: '10:00',
             status: 'delivered',
-            estimatedCost: 69,
-            actualCost: 75,
+            estimatedCost: 1999,
+            actualCost: 2199,
             isPaid: true
         });
 
@@ -237,7 +224,7 @@ const seedDB = async () => {
         await Payment.create({
             booking: booking1._id,
             customer: customer1._id,
-            amount: 110,
+            amount: 2799,
             stripePaymentIntentId: 'pi_demo_seed_001',
             status: 'completed'
         });
@@ -245,7 +232,7 @@ const seedDB = async () => {
         await Payment.create({
             booking: booking5._id,
             customer: customer2._id,
-            amount: 75,
+            amount: 2199,
             stripePaymentIntentId: 'pi_demo_seed_002',
             status: 'completed'
         });

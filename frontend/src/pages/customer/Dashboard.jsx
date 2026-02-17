@@ -53,7 +53,7 @@ const Dashboard = () => {
                 {/* Quick Stats */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                     {[
-                        { icon: Car, label: 'Vehicles', value: vehicles.length, color: 'from-blue-500 to-cyan-500' },
+                        { icon: Car, label: 'Cars', value: vehicles.length, color: 'from-blue-500 to-cyan-500' },
                         { icon: CalendarCheck, label: 'Bookings', value: bookings.length, color: 'from-purple-500 to-pink-500' },
                         { icon: Clock, label: 'Active', value: activeBookings.length, color: 'from-amber-500 to-orange-500' },
                         { icon: Star, label: 'Completed', value: bookings.filter(b => b.status === 'completed' || b.status === 'delivered').length, color: 'from-emerald-500 to-teal-500' },
@@ -72,7 +72,7 @@ const Dashboard = () => {
                 <div className="grid sm:grid-cols-3 gap-4 mb-8">
                     {[
                         { to: '/dashboard/book', icon: Wrench, label: 'Book Service', desc: 'Schedule a new service', color: 'from-primary to-secondary' },
-                        { to: '/dashboard/vehicles', icon: Car, label: 'My Vehicles', desc: 'Manage your vehicles', color: 'from-emerald-500 to-teal-500' },
+                        { to: '/dashboard/vehicles', icon: Car, label: 'My Cars', desc: 'Manage your cars', color: 'from-emerald-500 to-teal-500' },
                         { to: '/dashboard/bookings', icon: CalendarCheck, label: 'My Bookings', desc: 'Track your bookings', color: 'from-amber-500 to-orange-500' },
                     ].map((action, i) => (
                         <Link key={i} to={action.to}
@@ -129,7 +129,7 @@ const Dashboard = () => {
                     {/* Vehicles */}
                     <div className="lg:col-span-2 glass-card rounded-2xl overflow-hidden animate-fade-in-up" style={{ opacity: 0, animationDelay: '0.6s' }}>
                         <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between">
-                            <h3 className="font-semibold text-white">My Vehicles</h3>
+                            <h3 className="font-semibold text-white">My Cars</h3>
                             <Link to="/dashboard/vehicles" className="text-xs text-primary-light hover:text-primary font-medium">Manage →</Link>
                         </div>
                         {vehicles.length > 0 ? (
@@ -145,15 +145,15 @@ const Dashboard = () => {
                                                 <p className="text-[11px] text-slate-500">{v.registrationNumber}</p>
                                             </div>
                                         </div>
-                                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/[0.05] text-slate-400 capitalize">{v.type}</span>
+                                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/[0.05] text-slate-400">{v.registrationNumber}</span>
                                     </div>
                                 ))}
                             </div>
                         ) : (
                             <div className="text-center py-12">
                                 <Car className="w-10 h-10 mx-auto text-slate-700 mb-3" />
-                                <p className="text-slate-500 text-sm">No vehicles added</p>
-                                <Link to="/dashboard/vehicles" className="text-primary-light text-xs font-medium mt-1 block">Add a vehicle →</Link>
+                                <p className="text-slate-500 text-sm">No cars added</p>
+                                <Link to="/dashboard/vehicles" className="text-primary-light text-xs font-medium mt-1 block">Add a car →</Link>
                             </div>
                         )}
                     </div>

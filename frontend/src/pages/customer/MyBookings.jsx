@@ -97,7 +97,7 @@ const MyBookings = () => {
                                             <p className="text-sm text-slate-400">{b.serviceCenter?.name}</p>
                                             <p className="text-xs text-slate-500 mt-1">
                                                 📅 {new Date(b.scheduledDate).toLocaleDateString()} at {b.scheduledTime}
-                                                {b.estimatedCost && ` · 💰 $${b.actualCost || b.estimatedCost}`}
+                                                {b.estimatedCost && ` · 💰 ₹${(b.actualCost || b.estimatedCost).toLocaleString('en-IN')}`}
                                             </p>
                                         </div>
                                     </div>

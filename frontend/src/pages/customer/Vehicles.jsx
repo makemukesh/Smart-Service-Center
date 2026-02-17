@@ -80,8 +80,8 @@ const Vehicles = () => {
             <div className="max-w-6xl mx-auto">
                 <div className="flex items-center justify-between mb-8 animate-fade-in-up">
                     <div>
-                        <h1 className="text-2xl font-bold text-white">My Vehicles</h1>
-                        <p className="text-slate-400 text-sm">Manage your registered vehicles</p>
+                        <h1 className="text-2xl font-bold text-white">My Cars</h1>
+                        <p className="text-slate-400 text-sm">Manage your registered cars</p>
                     </div>
                     <button onClick={openAdd}
                         className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary to-secondary
@@ -93,12 +93,12 @@ const Vehicles = () => {
                 {vehicles.length === 0 ? (
                     <div className="glass-card p-12 rounded-2xl text-center animate-fade-in-up">
                         <Car className="w-16 h-16 mx-auto text-slate-600 mb-4" />
-                        <h3 className="text-xl font-semibold text-white mb-2">No Vehicles Yet</h3>
-                        <p className="text-slate-400 mb-6">Add your first vehicle to start booking services</p>
+                        <h3 className="text-xl font-semibold text-white mb-2">No Cars Yet</h3>
+                        <p className="text-slate-400 mb-6">Add your first car to start booking services</p>
                         <button onClick={openAdd}
                             className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-secondary
                        text-white font-medium rounded-xl hover:shadow-lg hover:shadow-primary/30 transition-all">
-                            <Plus className="w-4 h-4" /> Add Your First Vehicle
+                            <Plus className="w-4 h-4" /> Add Your First Car
                         </button>
                     </div>
                 ) : (
@@ -106,17 +106,15 @@ const Vehicles = () => {
                         {vehicles.map((v, i) => (
                             <div key={v._id} className="glass-card glass-card-hover rounded-2xl overflow-hidden animate-fade-in-up"
                                 style={{ opacity: 0, animationDelay: `${i * 0.1}s` }}>
-                                <div className={`h-2 bg-gradient-to-r ${v.type === 'car' ? 'from-blue-500 to-cyan-500' : 'from-purple-500 to-pink-500'}`} />
+                                <div className="h-2 bg-gradient-to-r from-blue-500 to-cyan-500" />
                                 <div className="p-5">
                                     <div className="flex items-start justify-between mb-4">
                                         <div className="flex items-center gap-3">
-                                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center
-                        ${v.type === 'car' ? 'bg-blue-500/10 text-blue-400' : 'bg-purple-500/10 text-purple-400'}`}>
+                                            <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-blue-500/10 text-blue-400">
                                                 <Car className="w-6 h-6" />
                                             </div>
                                             <div>
                                                 <h3 className="text-lg font-semibold text-white">{v.brand} {v.model}</h3>
-                                                <span className="text-xs px-2 py-0.5 rounded-full bg-white/5 text-slate-400 capitalize">{v.type}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -148,95 +146,96 @@ const Vehicles = () => {
             </div>
 
             {/* Modal */}
-            {showModal && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm">
-                    <div className="w-full max-w-lg glass-card rounded-2xl p-6 animate-fade-in-up">
-                        <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-xl font-bold text-white">{editing ? 'Edit Vehicle' : 'Add Vehicle'}</h2>
-                            <button onClick={() => setShowModal(false)} className="p-1 text-slate-400 hover:text-white transition-colors">
-                                <X className="w-5 h-5" />
-                            </button>
-                        </div>
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm text-slate-300 mb-1">Type</label>
-                                    <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}
-                                        className="w-full px-3 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:border-primary/50">
-                                        <option value="car">Car</option>
-                                        <option value="bike">Bike</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label className="block text-sm text-slate-300 mb-1">Fuel Type</label>
-                                    <select value={form.fuelType} onChange={(e) => setForm({ ...form, fuelType: e.target.value })}
-                                        className="w-full px-3 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:border-primary/50">
-                                        <option value="petrol">Petrol</option>
-                                        <option value="diesel">Diesel</option>
-                                        <option value="electric">Electric</option>
-                                        <option value="hybrid">Hybrid</option>
-                                        <option value="cng">CNG</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm text-slate-300 mb-1">Brand</label>
-                                    <input type="text" value={form.brand} onChange={(e) => setForm({ ...form, brand: e.target.value })}
-                                        required placeholder="Honda"
-                                        className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-primary/50" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm text-slate-300 mb-1">Model</label>
-                                    <input type="text" value={form.model} onChange={(e) => setForm({ ...form, model: e.target.value })}
-                                        required placeholder="City"
-                                        className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-primary/50" />
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm text-slate-300 mb-1">Year</label>
-                                    <input type="number" value={form.year} onChange={(e) => setForm({ ...form, year: Number(e.target.value) })}
-                                        required min="1990" max={new Date().getFullYear() + 1}
-                                        className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white focus:border-primary/50" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm text-slate-300 mb-1">Registration No.</label>
-                                    <input type="text" value={form.registrationNumber} onChange={(e) => setForm({ ...form, registrationNumber: e.target.value.toUpperCase() })}
-                                        required placeholder="MH01AB1234"
-                                        className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-primary/50" />
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm text-slate-300 mb-1">Color</label>
-                                    <input type="text" value={form.color} onChange={(e) => setForm({ ...form, color: e.target.value })}
-                                        placeholder="Silver"
-                                        className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-primary/50" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm text-slate-300 mb-1">Mileage (km)</label>
-                                    <input type="number" value={form.mileage} onChange={(e) => setForm({ ...form, mileage: Number(e.target.value) })}
-                                        min="0"
-                                        className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white focus:border-primary/50" />
-                                </div>
-                            </div>
-                            <div className="flex gap-3 pt-2">
-                                <button type="button" onClick={() => setShowModal(false)}
-                                    className="flex-1 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 transition-colors">
-                                    Cancel
+            {
+                showModal && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm">
+                        <div className="w-full max-w-lg glass-card rounded-2xl p-6 animate-fade-in-up">
+                            <div className="flex items-center justify-between mb-6">
+                                <h2 className="text-xl font-bold text-white">{editing ? 'Edit Car' : 'Add Car'}</h2>
+                                <button onClick={() => setShowModal(false)} className="p-1 text-slate-400 hover:text-white transition-colors">
+                                    <X className="w-5 h-5" />
                                 </button>
-                                <button type="submit"
-                                    className="flex-1 px-4 py-2.5 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-medium
+                            </div>
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm text-slate-300 mb-1">Type</label>
+                                        <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}
+                                            className="w-full px-3 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:border-primary/50">
+                                            <option value="car">Car</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm text-slate-300 mb-1">Fuel Type</label>
+                                        <select value={form.fuelType} onChange={(e) => setForm({ ...form, fuelType: e.target.value })}
+                                            className="w-full px-3 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:border-primary/50">
+                                            <option value="petrol">Petrol</option>
+                                            <option value="diesel">Diesel</option>
+                                            <option value="electric">Electric</option>
+                                            <option value="hybrid">Hybrid</option>
+                                            <option value="cng">CNG</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm text-slate-300 mb-1">Brand</label>
+                                        <input type="text" value={form.brand} onChange={(e) => setForm({ ...form, brand: e.target.value })}
+                                            required placeholder="Honda"
+                                            className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-primary/50" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm text-slate-300 mb-1">Model</label>
+                                        <input type="text" value={form.model} onChange={(e) => setForm({ ...form, model: e.target.value })}
+                                            required placeholder="City"
+                                            className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-primary/50" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm text-slate-300 mb-1">Year</label>
+                                        <input type="number" value={form.year} onChange={(e) => setForm({ ...form, year: Number(e.target.value) })}
+                                            required min="1990" max={new Date().getFullYear() + 1}
+                                            className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white focus:border-primary/50" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm text-slate-300 mb-1">Registration No.</label>
+                                        <input type="text" value={form.registrationNumber} onChange={(e) => setForm({ ...form, registrationNumber: e.target.value.toUpperCase() })}
+                                            required placeholder="MH01AB1234"
+                                            className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-primary/50" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm text-slate-300 mb-1">Color</label>
+                                        <input type="text" value={form.color} onChange={(e) => setForm({ ...form, color: e.target.value })}
+                                            placeholder="Silver"
+                                            className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-primary/50" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm text-slate-300 mb-1">Mileage (km)</label>
+                                        <input type="number" value={form.mileage} onChange={(e) => setForm({ ...form, mileage: Number(e.target.value) })}
+                                            min="0"
+                                            className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white focus:border-primary/50" />
+                                    </div>
+                                </div>
+                                <div className="flex gap-3 pt-2">
+                                    <button type="button" onClick={() => setShowModal(false)}
+                                        className="flex-1 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 transition-colors">
+                                        Cancel
+                                    </button>
+                                    <button type="submit"
+                                        className="flex-1 px-4 py-2.5 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-medium
                            hover:shadow-lg hover:shadow-primary/30 transition-all">
-                                    {editing ? 'Update' : 'Add'} Vehicle
-                                </button>
-                            </div>
-                        </form>
+                                        {editing ? 'Update' : 'Add'} Car
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )
+            }
+        </div >
     );
 };
 
