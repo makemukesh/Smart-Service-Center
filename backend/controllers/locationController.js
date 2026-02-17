@@ -1,41 +1,30 @@
 const locationData = require('../data/locationData');
 
-// @desc    Get all states
-// @route   GET /api/locations/states
-exports.getStates = (req, res) => {
-    const states = Object.keys(locationData).sort();
-    res.status(200).json({ success: true, states });
-};
-
-// @desc    Get cities for a state
-// @route   GET /api/locations/cities?state=X
+// @desc    Get all cities (districts of Gujarat)
+// @route   GET /api/locations/cities
 exports.getCities = (req, res) => {
-    const { state } = req.query;
-    if (!state || !locationData[state]) {
-        return res.status(200).json({ success: true, cities: [] });
-    }
-    const cities = Object.keys(locationData[state]).sort();
+    const cities = Object.keys(locationData).sort();
     res.status(200).json({ success: true, cities });
 };
 
-// @desc    Get talukas for a state and city
-// @route   GET /api/locations/talukas?state=X&city=Y
+// @desc    Get talukas for a city
+// @route   GET /api/locations/talukas?city=X
 exports.getTalukas = (req, res) => {
-    const { state, city } = req.query;
-    if (!state || !city || !locationData[state]?.[city]) {
+    const { city } = req.query;
+    if (!city || !locationData[city]) {
         return res.status(200).json({ success: true, talukas: [] });
     }
-    const talukas = Object.keys(locationData[state][city]).sort();
+    const talukas = Object.keys(locationData[city]).sort();
     res.status(200).json({ success: true, talukas });
 };
 
-// @desc    Get villages for a state, city, and taluka
-// @route   GET /api/locations/villages?state=X&city=Y&taluka=Z
+// @desc    Get villages for a city and taluka
+// @route   GET /api/locations/villages?city=X&taluka=Y
 exports.getVillages = (req, res) => {
-    const { state, city, taluka } = req.query;
-    if (!state || !city || !taluka || !locationData[state]?.[city]?.[taluka]) {
+    const { city, taluka } = req.query;
+    if (!city || !taluka || !locationData[city]?.[taluka]) {
         return res.status(200).json({ success: true, villages: [] });
     }
-    const villages = [...locationData[state][city][taluka]].sort();
+    const villages = [...locationData[city][taluka]].sort();
     res.status(200).json({ success: true, villages });
 };

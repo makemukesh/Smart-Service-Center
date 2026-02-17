@@ -9,7 +9,7 @@ const serviceCenterSchema = new mongoose.Schema({
     address: {
         street: { type: String, required: true },
         city: { type: String, required: true },
-        state: { type: String, required: true },
+        state: { type: String, default: 'Gujarat' },
         taluka: { type: String, default: '' },
         village: { type: String, default: '' },
         zipCode: { type: String, required: true }

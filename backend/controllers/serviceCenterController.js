@@ -4,19 +4,18 @@ const ServiceCenter = require('../models/ServiceCenter');
 // @route   GET /api/service-centers
 exports.getAllServiceCenters = async (req, res, next) => {
     try {
-        const { search, city, state, taluka, village, service, minRating, page = 1, limit = 20 } = req.query;
+        const { search, city, taluka, village, service, minRating, page = 1, limit = 20 } = req.query;
         const query = { isActive: true };
 
         if (search) {
             query.$or = [
                 { name: { $regex: search, $options: 'i' } },
                 { 'address.city': { $regex: search, $options: 'i' } },
-                { 'address.state': { $regex: search, $options: 'i' } },
                 { 'address.taluka': { $regex: search, $options: 'i' } },
                 { 'address.village': { $regex: search, $options: 'i' } }
             ];
         }
-        if (state) query['address.state'] = { $regex: state, $options: 'i' };
+
         if (city) query['address.city'] = { $regex: city, $options: 'i' };
         if (taluka) query['address.taluka'] = { $regex: taluka, $options: 'i' };
         if (village) query['address.village'] = { $regex: village, $options: 'i' };

@@ -37,11 +37,9 @@ const Centers = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     // Location filter states
-    const [states, setStates] = useState([]);
     const [cities, setCities] = useState([]);
     const [talukas, setTalukas] = useState([]);
     const [villages, setVillages] = useState([]);
-    const [selectedState, setSelectedState] = useState('');
     const [selectedCity, setSelectedCity] = useState('');
     const [selectedTaluka, setSelectedTaluka] = useState('');
     const [selectedVillage, setSelectedVillage] = useState('');
@@ -55,35 +53,23 @@ const Centers = () => {
         location: true, services: true, rating: true
     });
 
-    // Fetch states on mount
+    // Fetch cities on mount (Gujarat is default state)
     useEffect(() => {
-        const fetchStates = async () => {
+        const fetchCities = async () => {
             try {
-                const { data } = await API.get('/locations/states');
-                setStates(data.states || []);
-            } catch (err) { console.error(err); }
-        };
-        fetchStates();
-    }, []);
-
-    // Fetch cities when state changes
-    useEffect(() => {
-        if (!selectedState) { setCities([]); return; }
-        const fetch = async () => {
-            try {
-                const { data } = await API.get(`/locations/cities?state=${selectedState}`);
+                const { data } = await API.get('/locations/cities');
                 setCities(data.cities || []);
             } catch (err) { console.error(err); }
         };
-        fetch();
-    }, [selectedState]);
+        fetchCities();
+    }, []);
 
     // Fetch talukas when city changes
     useEffect(() => {
         if (!selectedCity) { setTalukas([]); return; }
         const fetch = async () => {
             try {
-                const { data } = await API.get(`/locations/talukas?state=${selectedState}&city=${selectedCity}`);
+                const { data } = await API.get(`/locations/talukas?city=${selectedCity}`);
                 setTalukas(data.talukas || []);
             } catch (err) { console.error(err); }
         };
@@ -95,7 +81,7 @@ const Centers = () => {
         if (!selectedTaluka) { setVillages([]); return; }
         const fetch = async () => {
             try {
-                const { data } = await API.get(`/locations/villages?state=${selectedState}&city=${selectedCity}&taluka=${selectedTaluka}`);
+                const { data } = await API.get(`/locations/villages?city=${selectedCity}&taluka=${selectedTaluka}`);
                 setVillages(data.villages || []);
             } catch (err) { console.error(err); }
         };
@@ -109,7 +95,6 @@ const Centers = () => {
             try {
                 const params = new URLSearchParams();
                 if (search) params.append('search', search);
-                if (selectedState) params.append('state', selectedState);
                 if (selectedCity) params.append('city', selectedCity);
                 if (selectedTaluka) params.append('taluka', selectedTaluka);
                 if (selectedVillage) params.append('village', selectedVillage);
@@ -131,7 +116,7 @@ const Centers = () => {
         };
         const debounce = setTimeout(fetchCenters, 300);
         return () => clearTimeout(debounce);
-    }, [search, selectedState, selectedCity, selectedTaluka, selectedVillage, selectedServices, selectedRating]);
+    }, [search, selectedCity, selectedTaluka, selectedVillage, selectedServices, selectedRating]);
 
     const toggleSection = (key) => setOpenSections(prev => ({ ...prev, [key]: !prev[key] }));
 
@@ -142,13 +127,12 @@ const Centers = () => {
     };
 
     const clearAllFilters = () => {
-        setSelectedState(''); setSelectedCity(''); setSelectedTaluka(''); setSelectedVillage('');
+        setSelectedCity(''); setSelectedTaluka(''); setSelectedVillage('');
         setSelectedServices([]); setSelectedRating(''); setSearch('');
     };
 
     const removeFilter = (type, value) => {
         switch (type) {
-            case 'state': setSelectedState(''); setSelectedCity(''); setSelectedTaluka(''); setSelectedVillage(''); break;
             case 'city': setSelectedCity(''); setSelectedTaluka(''); setSelectedVillage(''); break;
             case 'taluka': setSelectedTaluka(''); setSelectedVillage(''); break;
             case 'village': setSelectedVillage(''); break;
@@ -158,7 +142,6 @@ const Centers = () => {
     };
 
     const activeFilters = [
-        ...(selectedState ? [{ type: 'state', label: selectedState }] : []),
         ...(selectedCity ? [{ type: 'city', label: selectedCity }] : []),
         ...(selectedTaluka ? [{ type: 'taluka', label: selectedTaluka }] : []),
         ...(selectedVillage ? [{ type: 'village', label: selectedVillage }] : []),
@@ -210,22 +193,13 @@ const Centers = () => {
             {/* Location Section */}
             <FilterSection title="Location" icon={<MapPin className="w-4 h-4 text-emerald-400" />} sectionKey="location">
                 <div className="space-y-2.5">
-                    <select value={selectedState}
-                        onChange={(e) => { setSelectedState(e.target.value); setSelectedCity(''); setSelectedTaluka(''); setSelectedVillage(''); }}
+                    <select value={selectedCity}
+                        onChange={(e) => { setSelectedCity(e.target.value); setSelectedTaluka(''); setSelectedVillage(''); }}
                         className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.08] rounded-lg text-sm text-white
                             focus:border-primary/40 focus:ring-1 focus:ring-primary/20 cursor-pointer transition-all">
-                        <option value="">All States</option>
-                        {states.map(s => <option key={s} value={s}>{s}</option>)}
+                        <option value="">All Cities (Gujarat)</option>
+                        {cities.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
-                    {selectedState && (
-                        <select value={selectedCity}
-                            onChange={(e) => { setSelectedCity(e.target.value); setSelectedTaluka(''); setSelectedVillage(''); }}
-                            className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.08] rounded-lg text-sm text-white
-                                focus:border-primary/40 cursor-pointer transition-all">
-                            <option value="">All Cities</option>
-                            {cities.map(c => <option key={c} value={c}>{c}</option>)}
-                        </select>
-                    )}
                     {selectedCity && talukas.length > 0 && (
                         <select value={selectedTaluka}
                             onChange={(e) => { setSelectedTaluka(e.target.value); setSelectedVillage(''); }}
@@ -349,7 +323,7 @@ const Centers = () => {
                             <div className="relative flex-1">
                                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                                 <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}
-                                    placeholder="Search by name, city, or state..."
+                                    placeholder="Search by name, city, or taluka..."
                                     className="w-full pl-11 pr-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white text-sm
                                         placeholder-slate-600 focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all" />
                             </div>
