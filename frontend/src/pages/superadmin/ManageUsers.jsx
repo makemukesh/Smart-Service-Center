@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import API from '../../services/api';
-import { Users, Search, Shield, Edit2, Trash2, ToggleLeft, ToggleRight, RefreshCw, UserCheck, AlertCircle } from 'lucide-react';
+import { Users, Search, Shield, Trash2, ToggleLeft, ToggleRight, RefreshCw, UserCheck, MapPin } from 'lucide-react';
 import toast from 'react-hot-toast';
+import LocationFilter from '../../components/LocationFilter';
 
 const ManageUsers = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [roleFilter, setRoleFilter] = useState('');
+    const [locationFilter, setLocationFilter] = useState({ state: '', city: '', taluka: '', village: '' });
 
     useEffect(() => { fetchUsers(); }, []);
 
@@ -50,7 +52,11 @@ const ManageUsers = () => {
             u.name?.toLowerCase().includes(search.toLowerCase()) ||
             u.email?.toLowerCase().includes(search.toLowerCase());
         const matchRole = !roleFilter || u.role === roleFilter;
-        return matchSearch && matchRole;
+        const matchState = !locationFilter.state || u.state === locationFilter.state;
+        const matchCity = !locationFilter.city || u.city === locationFilter.city;
+        const matchTaluka = !locationFilter.taluka || u.taluka === locationFilter.taluka;
+        const matchVillage = !locationFilter.village || u.village === locationFilter.village;
+        return matchSearch && matchRole && matchState && matchCity && matchTaluka && matchVillage;
     });
 
     const getRoleBadge = (role) => {
@@ -65,7 +71,7 @@ const ManageUsers = () => {
     return (
         <div className="p-6 lg:p-8 min-h-screen">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 animate-fade-in-up">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 animate-fade-in-up">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
                         <Users className="w-5 h-5 text-white" />
@@ -99,6 +105,27 @@ const ManageUsers = () => {
                 </div>
             </div>
 
+            {/* Location Filters */}
+            <div className="glass-card rounded-2xl p-4 mb-6 animate-fade-in-up" style={{ opacity: 0, animationDelay: '0.08s' }}>
+                <div className="flex items-center gap-3 mb-3">
+                    <MapPin className="w-4 h-4 text-primary-light" />
+                    <span className="text-sm font-medium text-slate-300">Filter by Location</span>
+                    {(locationFilter.state || locationFilter.city || locationFilter.taluka || locationFilter.village) && (
+                        <button
+                            onClick={() => setLocationFilter({ state: '', city: '', taluka: '', village: '' })}
+                            className="text-[11px] text-red-400 hover:text-red-300 font-medium ml-auto transition-colors"
+                        >
+                            Clear Filters
+                        </button>
+                    )}
+                </div>
+                <LocationFilter
+                    values={locationFilter}
+                    onChange={setLocationFilter}
+                    mode="filter"
+                />
+            </div>
+
             {/* Summary Cards */}
             <div className="grid grid-cols-3 gap-4 mb-8">
                 {[
@@ -107,7 +134,7 @@ const ManageUsers = () => {
                     { label: 'Active', count: users.filter(u => u.isActive !== false).length, color: 'from-emerald-500/10 to-teal-500/10 border-emerald-500/15', icon: UserCheck },
                 ].map((s, i) => (
                     <div key={i} className={`bg-gradient-to-br ${s.color} rounded-2xl p-5 border animate-fade-in-up`}
-                        style={{ opacity: 0, animationDelay: `${i * 0.08}s` }}>
+                        style={{ opacity: 0, animationDelay: `${(i + 1) * 0.08}s` }}>
                         <s.icon className="w-5 h-5 text-slate-400 mb-2" />
                         <p className="text-2xl font-bold text-white">{s.count}</p>
                         <p className="text-xs text-slate-500 font-medium">{s.label}</p>
@@ -121,13 +148,14 @@ const ManageUsers = () => {
                     <div className="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
                 </div>
             ) : (
-                <div className="glass-card rounded-2xl overflow-hidden animate-fade-in-up" style={{ opacity: 0, animationDelay: '0.2s' }}>
+                <div className="glass-card rounded-2xl overflow-hidden animate-fade-in-up" style={{ opacity: 0, animationDelay: '0.3s' }}>
                     <div className="overflow-x-auto">
                         <table className="data-table">
                             <thead>
                                 <tr>
                                     <th>User</th>
                                     <th>Phone</th>
+                                    <th>Location</th>
                                     <th>Role</th>
                                     <th>Status</th>
                                     <th>Joined</th>
@@ -149,6 +177,22 @@ const ManageUsers = () => {
                                             </div>
                                         </td>
                                         <td className="text-sm text-slate-400">{u.phone || '-'}</td>
+                                        <td>
+                                            <div className="text-sm">
+                                                {u.state ? (
+                                                    <div className="space-y-0.5">
+                                                        <p className="text-slate-300 text-xs font-medium">{u.state}{u.city ? `, ${u.city}` : ''}</p>
+                                                        {(u.taluka || u.village) && (
+                                                            <p className="text-[11px] text-slate-500">
+                                                                {u.taluka}{u.village ? ` → ${u.village}` : ''}
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                ) : (
+                                                    <span className="text-slate-600 text-xs">Not set</span>
+                                                )}
+                                            </div>
+                                        </td>
                                         <td>
                                             <select value={u.role} onChange={(e) => updateRole(u._id, e.target.value)}
                                                 className={`text-xs px-2.5 py-1 rounded-lg font-medium border cursor-pointer ${getRoleBadge(u.role)}

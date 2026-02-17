@@ -10,6 +10,8 @@ const serviceCenterSchema = new mongoose.Schema({
         street: { type: String, required: true },
         city: { type: String, required: true },
         state: { type: String, required: true },
+        taluka: { type: String, default: '' },
+        village: { type: String, default: '' },
         zipCode: { type: String, required: true }
     },
     phone: {

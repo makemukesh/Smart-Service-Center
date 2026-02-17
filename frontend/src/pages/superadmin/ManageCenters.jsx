@@ -289,7 +289,7 @@ const ManageCenters = () => {
                                             className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-all duration-200 border
                         ${form.servicesOffered?.includes(s)
                                                     ? 'bg-primary/15 text-primary-light border-primary/25'
-                                                    : 'bg-white/[0.03] text-slate-500 border-white/[0.06] hover:borderwhite/[0.12] hover:text-slate-300'
+                                                    : 'bg-white/[0.03] text-slate-500 border-white/[0.06] hover:border-white/[0.12] hover:text-slate-300'
                                                 }`}>
                                             {s.replace(/_/g, ' ')}
                                         </button>

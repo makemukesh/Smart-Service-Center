@@ -6,10 +6,16 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 
-const Sidebar = ({ role = 'admin' }) => {
+const Sidebar = ({ role = 'admin', onCollapse }) => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [collapsed, setCollapsed] = useState(false);
+
+    const handleCollapse = () => {
+        const next = !collapsed;
+        setCollapsed(next);
+        onCollapse?.(next);
+    };
 
     const handleLogout = () => {
         logout();
@@ -68,7 +74,7 @@ const Sidebar = ({ role = 'admin' }) => {
                 )}
 
                 {/* Toggle */}
-                <button onClick={() => setCollapsed(!collapsed)}
+                <button onClick={handleCollapse}
                     className="absolute -right-3.5 top-[72px] w-7 h-7 rounded-full bg-[#1e293b] border border-white/10 text-slate-400
                    flex items-center justify-center shadow-lg hover:text-white hover:border-primary/40 hover:bg-primary/20
                    transition-all duration-200 z-10">

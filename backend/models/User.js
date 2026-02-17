@@ -43,6 +43,26 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ServiceCenter',
         default: null
+    },
+    state: {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    city: {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    taluka: {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    village: {
+        type: String,
+        trim: true,
+        default: ''
     }
 }, {
     timestamps: true

@@ -122,17 +122,17 @@ const AdminDashboard = () => {
     };
 
     const statCards = [
-        { icon: CalendarCheck, label: 'Total Bookings', value: stats?.totalBookings || 0, color: 'from-blue-500 to-cyan-500', bg: 'bg-blue-500/8' },
-        { icon: Clock, label: 'Pending', value: stats?.pendingBookings || 0, color: 'from-amber-500 to-orange-500', bg: 'bg-amber-500/8' },
-        { icon: Activity, label: 'In Service', value: stats?.activeServices || 0, color: 'from-purple-500 to-pink-500', bg: 'bg-purple-500/8' },
-        { icon: CheckCircle, label: 'Completed', value: stats?.completedBookings || 0, color: 'from-emerald-500 to-teal-500', bg: 'bg-emerald-500/8' },
-        { icon: DollarSign, label: 'Revenue', value: `$${stats?.totalRevenue || 0}`, color: 'from-green-500 to-emerald-500', bg: 'bg-green-500/8' },
+        { icon: CalendarCheck, label: 'Total Bookings', value: stats?.totalBookings || 0, color: 'from-blue-500 to-cyan-500', shadow: 'shadow-blue-500/20' },
+        { icon: Clock, label: 'Pending', value: stats?.pendingBookings || 0, color: 'from-amber-500 to-orange-500', shadow: 'shadow-amber-500/20' },
+        { icon: Activity, label: 'In Service', value: stats?.activeServices || 0, color: 'from-purple-500 to-pink-500', shadow: 'shadow-purple-500/20' },
+        { icon: CheckCircle, label: 'Completed', value: stats?.completedBookings || 0, color: 'from-emerald-500 to-teal-500', shadow: 'shadow-emerald-500/20' },
+        { icon: DollarSign, label: 'Revenue', value: `$${stats?.totalRevenue || 0}`, color: 'from-green-500 to-emerald-500', shadow: 'shadow-green-500/20' },
     ];
 
     if (user?.role === 'superadmin') {
         statCards.push(
-            { icon: Users, label: 'Total Users', value: stats?.totalUsers || 0, color: 'from-indigo-500 to-violet-500', bg: 'bg-indigo-500/8' },
-            { icon: Building2, label: 'Centers', value: stats?.totalServiceCenters || 0, color: 'from-rose-500 to-red-500', bg: 'bg-rose-500/8' }
+            { icon: Users, label: 'Total Users', value: stats?.totalUsers || 0, color: 'from-indigo-500 to-violet-500', shadow: 'shadow-indigo-500/20' },
+            { icon: Building2, label: 'Centers', value: stats?.totalServiceCenters || 0, color: 'from-rose-500 to-red-500', shadow: 'shadow-rose-500/20' }
         );
     }
 
@@ -160,7 +160,7 @@ const AdminDashboard = () => {
                         style={{ opacity: 0, animationDelay: `${i * 0.08}s` }}>
                         <div className="flex items-center justify-between mb-4">
                             <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${card.color} flex items-center justify-center
-                            shadow-lg shadow-${card.color.split(' ')[0].replace('from-', '')}/20`}>
+                            shadow-lg ${card.shadow}`}>
                                 <card.icon className="w-5 h-5 text-white" />
                             </div>
                             <TrendingUp className="w-4 h-4 text-emerald-400/50" />

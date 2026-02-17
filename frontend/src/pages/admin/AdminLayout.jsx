@@ -5,11 +5,11 @@ import { useAuth } from '../../context/AuthContext';
 
 const AdminLayout = () => {
     const { user } = useAuth();
-    const [sidebarCollapsed] = useState(false);
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
     return (
         <div className="min-h-screen bg-transparent">
-            <Sidebar role={user?.role === 'superadmin' ? 'superadmin' : 'admin'} />
+            <Sidebar role={user?.role === 'superadmin' ? 'superadmin' : 'admin'} onCollapse={setSidebarCollapsed} />
             <div className={`transition-all duration-300 ${sidebarCollapsed ? 'ml-[68px]' : 'ml-[260px]'}`}>
                 <div className="min-h-screen">
                     <Outlet />

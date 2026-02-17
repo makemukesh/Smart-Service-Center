@@ -3,11 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Mail, Lock, Eye, EyeOff, Car, User, Phone, ArrowRight, AlertCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
+import LocationFilter from '../components/LocationFilter';
 
 const Register = () => {
     const { register } = useAuth();
     const navigate = useNavigate();
-    const [form, setForm] = useState({ name: '', email: '', password: '', confirmPassword: '', phone: '' });
+    const [form, setForm] = useState({
+        name: '', email: '', password: '', confirmPassword: '', phone: '',
+        state: '', city: '', taluka: '', village: ''
+    });
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -31,7 +35,11 @@ const Register = () => {
                 name: form.name,
                 email: form.email,
                 password: form.password,
-                phone: form.phone
+                phone: form.phone,
+                state: form.state,
+                city: form.city,
+                taluka: form.taluka,
+                village: form.village
             });
             toast.success('Account created successfully!');
             navigate('/dashboard');
@@ -46,6 +54,10 @@ const Register = () => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
+    const handleLocationChange = (locationData) => {
+        setForm({ ...form, ...locationData });
+    };
+
     return (
         <div className="min-h-screen flex items-center justify-center px-4 py-20">
             <div className="fixed inset-0 z-0">
@@ -53,7 +65,7 @@ const Register = () => {
                 <div className="absolute bottom-1/3 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px]"></div>
             </div>
 
-            <div className="w-full max-w-md relative z-10 animate-fade-in-up">
+            <div className="w-full max-w-lg relative z-10 animate-fade-in-up">
                 <div className="text-center mb-8">
                     <div className="w-16 h-16 mx-auto bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center mb-4
                         shadow-lg shadow-primary/30">
@@ -100,6 +112,22 @@ const Register = () => {
                                     placeholder="9876543210" pattern="[0-9]{10}"
                                     className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-primary/50 transition-all" />
                             </div>
+                        </div>
+
+                        {/* Location Fields */}
+                        <div className="pt-2 pb-1">
+                            <p className="text-sm font-medium text-slate-300 mb-3 flex items-center gap-2">
+                                <span className="w-5 h-5 rounded-md bg-primary/20 flex items-center justify-center">
+                                    <span className="text-[10px] text-primary-light">📍</span>
+                                </span>
+                                Location Details
+                                <span className="text-[11px] text-slate-600 font-normal">(Optional)</span>
+                            </p>
+                            <LocationFilter
+                                values={{ state: form.state, city: form.city, taluka: form.taluka, village: form.village }}
+                                onChange={handleLocationChange}
+                                mode="form"
+                            />
                         </div>
 
                         <div>

@@ -4,7 +4,7 @@ const User = require('../models/User');
 // @route   POST /api/auth/register
 exports.register = async (req, res, next) => {
     try {
-        const { name, email, password, phone, role } = req.body;
+        const { name, email, password, phone, role, state, city, taluka, village } = req.body;
 
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -19,7 +19,11 @@ exports.register = async (req, res, next) => {
             email,
             password,
             phone,
-            role: role || 'customer'
+            role: role || 'customer',
+            state: state || '',
+            city: city || '',
+            taluka: taluka || '',
+            village: village || ''
         });
 
         const token = user.generateToken();
@@ -33,7 +37,11 @@ exports.register = async (req, res, next) => {
                 name: user.name,
                 email: user.email,
                 role: user.role,
-                phone: user.phone
+                phone: user.phone,
+                state: user.state,
+                city: user.city,
+                taluka: user.taluka,
+                village: user.village
             }
         });
     } catch (error) {
@@ -89,7 +97,11 @@ exports.login = async (req, res, next) => {
                 email: user.email,
                 role: user.role,
                 phone: user.phone,
-                serviceCenterId: user.serviceCenterId
+                serviceCenterId: user.serviceCenterId,
+                state: user.state,
+                city: user.city,
+                taluka: user.taluka,
+                village: user.village
             }
         });
     } catch (error) {
@@ -115,10 +127,16 @@ exports.getMe = async (req, res, next) => {
 // @route   PUT /api/auth/profile
 exports.updateProfile = async (req, res, next) => {
     try {
-        const { name, phone } = req.body;
+        const { name, phone, state, city, taluka, village } = req.body;
+        const updateData = { name, phone };
+        if (state !== undefined) updateData.state = state;
+        if (city !== undefined) updateData.city = city;
+        if (taluka !== undefined) updateData.taluka = taluka;
+        if (village !== undefined) updateData.village = village;
+
         const user = await User.findByIdAndUpdate(
             req.user.id,
-            { name, phone },
+            updateData,
             { new: true, runValidators: true }
         );
 
@@ -136,10 +154,14 @@ exports.updateProfile = async (req, res, next) => {
 // @route   GET /api/auth/users
 exports.getAllUsers = async (req, res, next) => {
     try {
-        const { role, search, page = 1, limit = 20 } = req.query;
+        const { role, search, state, city, taluka, village, page = 1, limit = 20 } = req.query;
         const query = {};
 
         if (role) query.role = role;
+        if (state) query.state = state;
+        if (city) query.city = city;
+        if (taluka) query.taluka = taluka;
+        if (village) query.village = village;
         if (search) {
             query.$or = [
                 { name: { $regex: search, $options: 'i' } },

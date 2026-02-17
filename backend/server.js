@@ -32,6 +32,7 @@ app.use('/api/service-centers', require('./routes/serviceCenterRoutes'));
 app.use('/api/bookings', require('./routes/bookingRoutes'));
 app.use('/api/payments', require('./routes/paymentRoutes'));
 app.use('/api/feedbacks', require('./routes/feedbackRoutes'));
+app.use('/api/locations', require('./routes/locationRoutes'));
 
 // Health check
 app.get('/api/health', (req, res) => {
